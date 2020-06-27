@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:riv_corner_radius_top_left="10dp"
+        app:riv_corner_radius_top_right="10dp"
+        tools:layout_height="200dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_corners_white_10_bg"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/txt_color"
+            android:textSize="15sp"
+            tools:text="蛋黄肉粽" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/txt_color"
+            android:textSize="13sp"
+            tools:text="当吃到蛋黄与鲜肉后，才知咸香入口的双重体验，能叫人如此回味" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#f00"
+            android:textSize="15sp"
+            tools:text="¥49.50" />
+
+        <TextView
+            android:id="@+id/tv_look_similar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="7dp"
+            android:text="看相似"
+            android:textColor="#9c9c9c"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_shop_cart"
+            android:layout_width="28dp"
+            android:visibility="gone"
+            android:layout_height="28dp"
+            android:layout_below="@+id/tv_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/gray_circular_bg"
+            android:padding="7dp"
+            android:src="@drawable/ic_shop_cart" />
+
+    </RelativeLayout>
+
+</LinearLayout>
