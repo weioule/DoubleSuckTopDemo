@@ -7,7 +7,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -42,9 +41,7 @@ public class MainActivity extends FragmentActivity {
     private AppBarLayout mAppBarLayout;
     private RelativeLayout mFloatSearchRl;
     private LinearLayout mHeaderLl;
-    private Toolbar mToolbar;
     private SlidingTabLayout mTabView;
-    private SlidingTabLayout mFloatTabView;
     private ViewPager mViewPager;
 
     private int totalScrollRange, oldVerticalOffset = -1;
@@ -68,9 +65,7 @@ public class MainActivity extends FragmentActivity {
         mFloatSearchRl = findViewById(R.id.rl_float_search);
         mAppBarLayout = findViewById(R.id.app_bar);
         mTabView = findViewById(R.id.tab_layout);
-        mFloatTabView = findViewById(R.id.float_tab_layout);
         mViewPager = findViewById(R.id.view_pager);
-        mToolbar = findViewById(R.id.toolbar);
         mHeaderLl = findViewById(R.id.ll_header);
 
         addProductBeans();
@@ -126,7 +121,6 @@ public class MainActivity extends FragmentActivity {
                 loadData();
             }
 
-
             @Override
             public void onAnimationStart() {
                 mAppBarLayout.removeOnOffsetChangedListener(offsetChangedListener);
@@ -166,23 +160,20 @@ public class MainActivity extends FragmentActivity {
             }
 
             if (verticalOffse <= -Utils.dp2px(40)) {
-                mToolbar.setVisibility(View.VISIBLE);
                 mFloatSearchRl.setVisibility(View.VISIBLE);
             } else {
                 mFloatSearchRl.setVisibility(View.GONE);
-                mToolbar.setVisibility(View.GONE);
             }
 
             if (Math.abs(verticalOffse) >= totalScrollRange && totalScrollRange != 0) {
-                mFloatTabView.setVisibility(View.VISIBLE);
+                mTabView.setBackgroundColor(getResources().getColor(R.color.white_color));
             } else {
-                mFloatTabView.setVisibility(View.GONE);
+                mTabView.setBackgroundColor(getResources().getColor(R.color.background_color));
             }
 
             oldVerticalOffset = verticalOffse;
         }
     };
-
 
     public void getData() {
         mHeaderLl.removeAllViews();
@@ -193,7 +184,6 @@ public class MainActivity extends FragmentActivity {
         addFeaturedView();
         initViewpager();
 
-
         switchAppbarLayout(true);
     }
 
@@ -201,7 +191,6 @@ public class MainActivity extends FragmentActivity {
         View mTopView = getLayoutInflater().inflate(R.layout.top_view_layout, mHeaderLl, false);
         mHeaderLl.addView(mTopView);
     }
-
 
     private void addBannerView() {
         View mBannerView = getLayoutInflater().inflate(R.layout.banner_layout, mHeaderLl, false);
@@ -233,7 +222,6 @@ public class MainActivity extends FragmentActivity {
 
         mHeaderLl.addView(mBannerView);
     }
-
 
     private void addRecommendView() {
         RecyclerView mRecyclerView = new RecyclerView(this);
@@ -281,23 +269,19 @@ public class MainActivity extends FragmentActivity {
         fragmentAdapter = new HomeViewPagerAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(fragmentAdapter);
         mTabView.setOnTabSelectListener(onTabSelectListener);
-        mFloatTabView.setOnTabSelectListener(onTabSelectListener);
         mViewPager.addOnPageChangeListener(onPageChangeListener);
 
         mTabView.setViewPager(mViewPager, titles);
-        mFloatTabView.setViewPager(mViewPager, titles);
     }
 
     private OnTabSelectListener onTabSelectListener = new OnTabSelectListener() {
         @Override
         public void onTabSelect(int position) {
             mTabView.setCurrentTab(position);
-            mFloatTabView.setCurrentTab(position);
         }
 
         @Override
         public void onTabReselect(int position) {
-
         }
     };
 
@@ -309,16 +293,13 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public void onPageSelected(int position) {
-            mFloatTabView.setCurrentTab(position);
             mTabView.setCurrentTab(position);
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
         }
     };
-
 
     /**
      * 控制appbar的滑动
@@ -333,7 +314,6 @@ public class MainActivity extends FragmentActivity {
             mAppBarChildAt.setLayoutParams(mAppBarParams);
         } else if (mAppBarParams.getScrollFlags() != 0)
             mAppBarParams.setScrollFlags(0);
-
     }
 
     public void switchAppbarLayout(boolean open) {
@@ -351,5 +331,4 @@ public class MainActivity extends FragmentActivity {
             }
         }
     }
-
 }

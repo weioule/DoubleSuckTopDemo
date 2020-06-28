@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.doublesucktopdemo.adapter.FragmentAdapter;
-import com.example.doublesucktopdemo.widget.RecyclerViewDivider;
 
 import java.util.ArrayList;
 
@@ -53,12 +52,9 @@ public class HomeFragment extends Fragment {
         });
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(adapter);
-        RecyclerViewDivider divider = new RecyclerViewDivider.Builder(getContext())
-                .setStyle(RecyclerViewDivider.Style.BOTH)
-                .setColor(0x00000000)
-                .setOrientation(RecyclerViewDivider.GRIDE_VIW)
-                .setSize(10)
-                .build();
-        mRecyclerView.addItemDecoration(divider);
+
+        View topPaddingView = new View(getContext());
+        topPaddingView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.dp2px(10)));
+        adapter.addHeaderView(topPaddingView);
     }
 }

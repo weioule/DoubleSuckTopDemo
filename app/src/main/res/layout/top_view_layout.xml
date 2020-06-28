@@ -45,41 +45,5 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/include_home_top_rl_search"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/rounded_corners_white_bg">
-
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/ic_search" />
-
-        <TextView
-            android:textSize="13sp"
-            android:id="@+id/include_home_top_tv_search_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="35dp"
-            android:text="鲜肉粽" />
-
-        <ImageView
-            android:id="@+id/include_home_top_iv_search_icon"
-            android:layout_width="21dp"
-            android:layout_height="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@drawable/ic_camera" />
-
-    </RelativeLayout>
-
-
+    <include layout="@layout/search_layout" />
 </LinearLayout>
