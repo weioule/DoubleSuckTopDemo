@@ -24,32 +24,20 @@
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white_color"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                    <androidx.core.widget.NestedScrollView
+                    <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="180dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/header_bg" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@color/white_color">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="180dp"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/header_bg" />
-
-                            <LinearLayout
-                                android:id="@+id/ll_header"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical" />
-
-                        </RelativeLayout>
-
-                    </androidx.core.widget.NestedScrollView>
+                    <LinearLayout
+                         android:id="@+id/ll_header"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:orientation="vertical" />
 
                     <!-- 给SlidingTabLayout占位的-->
                     <androidx.appcompat.widget.Toolbar
