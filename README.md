@@ -11,4 +11,10 @@
 ![image](https://github.com/weioule/DoubleSuckTopDemo/blob/master/app/img/img02.jpg)&nbsp;&nbsp;
 ![image](https://github.com/weioule/DoubleSuckTopDemo/blob/master/app/img/img03.jpg)&nbsp;&nbsp;
 
+思路解析：
 
+第一个吸顶采用搜索框悬浮view固定显示隐藏实现，第二个吸顶是原生的CollapsingToolbarLayout + AppBarLayout实现，本来想着用两层CollapsingToolbarLayout + AppBarLayout嵌套，但经过验证后确实是行不通的.
+
+第二个吸顶的位置得悬停在第一个吸顶的底部，所以用了Toolbar做占位，它的高度正是悬浮的搜索框的高度.
+
+因为首页大多都会有刷新，所以还要考虑到与刷新的滑动冲突，这里设置了监听只有AppBarLayout是完全关闭状态时才可用.
