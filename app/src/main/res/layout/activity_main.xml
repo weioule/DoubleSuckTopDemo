@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.doublesucktopdemo.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_refresh_layout"
+    android:id="@+id/refresh_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    app:srlDisableContentWhenRefresh="true"
+    app:srlEnableOverScrollBounce="false"
+    app:srlHeaderMaxDragRate="2"
+    app:srlPrimaryColor="@color/theme_color">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,20 +28,26 @@
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white_color"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                    <ImageView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/header_bg" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/white_color">
 
-                    <LinearLayout
-                         android:id="@+id/ll_header"
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:orientation="vertical" />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/header_bg" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                    </RelativeLayout>
 
                     <!-- 给SlidingTabLayout占位的-->
                     <androidx.appcompat.widget.Toolbar
@@ -76,4 +86,4 @@
 
         </RelativeLayout>
     </RelativeLayout>
-</com.example.doublesucktopdemo.widget.SwipeRefreshLayout>
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>

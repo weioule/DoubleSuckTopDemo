@@ -16,7 +16,6 @@ import androidx.annotation.IntDef;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import static android.util.TypedValue.applyDimension;
 
@@ -85,8 +84,6 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
                 RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
                 if (null != layoutManager && layoutManager instanceof GridLayoutManager) {
                     spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
-                } else if (null != layoutManager && layoutManager instanceof StaggeredGridLayoutManager) {
-                    spanCount = ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
                 }
             }
 

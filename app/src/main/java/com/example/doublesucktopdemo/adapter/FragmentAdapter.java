@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class FragmentAdapter extends BaseQuickAdapter<ProductBean, BaseViewHolder> {
 
-
     public FragmentAdapter(@Nullable List<ProductBean> data) {
         super(R.layout.frmagent_adapter_item, data);
     }

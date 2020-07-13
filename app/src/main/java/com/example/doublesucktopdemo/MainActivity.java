@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
@@ -19,11 +20,14 @@ import com.example.doublesucktopdemo.adapter.HomeViewPagerAdapter;
 import com.example.doublesucktopdemo.adapter.MyBannerAdapter;
 import com.example.doublesucktopdemo.adapter.RecommendAdapter;
 import com.example.doublesucktopdemo.widget.RecyclerViewDivider;
-import com.example.doublesucktopdemo.widget.SwipeRefreshLayout;
+import com.example.doublesucktopdemo.widget.RefreshHeaderView.TodayNewsHeader;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.leaf.library.StatusBarUtil;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.indicator.CircleIndicator;
 
@@ -36,8 +40,7 @@ import java.util.List;
  * on 2019/6/26.
  */
 public class MainActivity extends FragmentActivity {
-
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private SmartRefreshLayout refreshView;
     private AppBarLayout mAppBarLayout;
     private RelativeLayout mFloatSearchRl;
     private LinearLayout mHeaderLl;
@@ -61,13 +64,13 @@ public class MainActivity extends FragmentActivity {
 
     private void initView() {
         StatusBarUtil.setColor(this, getColor(R.color.theme_color));
-        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        refreshView = findViewById(R.id.refresh_view);
         mFloatSearchRl = findViewById(R.id.rl_float_search);
         mAppBarLayout = findViewById(R.id.app_bar);
         mTabView = findViewById(R.id.tab_layout);
         mViewPager = findViewById(R.id.view_pager);
         mHeaderLl = findViewById(R.id.ll_header);
-
+        refreshView.setRefreshHeader(new TodayNewsHeader(this));
         addProductBeans();
         getData();
     }
@@ -115,36 +118,25 @@ public class MainActivity extends FragmentActivity {
 
     private void addListener() {
         mAppBarLayout.addOnOffsetChangedListener(offsetChangedListener);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshView.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 loadData();
-            }
-
-            @Override
-            public void onAnimationStart() {
-                mAppBarLayout.removeOnOffsetChangedListener(offsetChangedListener);
-                banAppBarScroll(false);
-            }
-
-            @Override
-            public void onAnimationEnd() {
-                mAppBarLayout.addOnOffsetChangedListener(offsetChangedListener);
-                banAppBarScroll(true);
             }
         });
     }
 
     private void loadData() {
-        mSwipeRefreshLayout.postDelayed(new Runnable() {
+        refreshView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
-                mSwipeRefreshLayout.setEnabled(true);
+                refreshView.finishRefresh();
+                refreshView.setEnabled(true);
             }
-        }, 1500);
+        }, 800);
     }
 
+    // 这里的处理是当AppBarLayout处于最顶部也就是完全打开状态verticalOffse=0时才允许刷新控件可用.
     private AppBarLayout.OnOffsetChangedListener offsetChangedListener = new AppBarLayout.OnOffsetChangedListener() {
 
         @Override
@@ -154,9 +146,9 @@ public class MainActivity extends FragmentActivity {
             if (oldVerticalOffset == verticalOffse) return;
 
             if (verticalOffse == 0) {
-                mSwipeRefreshLayout.setEnabled(true);
+                refreshView.setEnabled(true);
             } else {
-                mSwipeRefreshLayout.setEnabled(false);
+                refreshView.setEnabled(false);
             }
 
             if (verticalOffse <= -Utils.dp2px(40)) {
@@ -183,8 +175,6 @@ public class MainActivity extends FragmentActivity {
         addRecommendView();
         addFeaturedView();
         initViewpager();
-
-        switchAppbarLayout(true);
     }
 
     private void addTopView() {
@@ -288,7 +278,6 @@ public class MainActivity extends FragmentActivity {
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
         }
 
         @Override
@@ -304,7 +293,7 @@ public class MainActivity extends FragmentActivity {
     /**
      * 控制appbar的滑动
      *
-     * @param isScroll true 允许滑动 false 禁止滑动
+     * @param isScroll true 允许滑动   false 禁止滑动
      */
     private void banAppBarScroll(boolean isScroll) {
         View mAppBarChildAt = mAppBarLayout.getChildAt(0);
@@ -316,6 +305,12 @@ public class MainActivity extends FragmentActivity {
             mAppBarParams.setScrollFlags(0);
     }
 
+    /**
+     * 控制appbar的开关
+     * 需要手动开关时调用
+     *
+     * @param open true 打开   false 关闭
+     */
     public void switchAppbarLayout(boolean open) {
         CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams()).getBehavior();
         if (behavior instanceof AppBarLayout.Behavior) {

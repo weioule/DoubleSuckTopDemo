@@ -12,7 +12,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            //LOG 和 LeakCanary 开关
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -38,5 +46,7 @@ dependencies {
 
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.github.Ye-Miao:StatusBarUtil:1.7.5'
+
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
 
 }
